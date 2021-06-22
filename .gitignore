@@ -1,0 +1,14 @@
+# Byte-compiled
+__pycache__/
+
+# Build distributions
+dist/
+
+# Environment
+.envrc
+
+# Flycheck
+flycheck_*.py
+
+# Mac OS
+.DS_Store
