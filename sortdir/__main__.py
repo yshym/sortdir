@@ -1,12 +1,12 @@
-import os
 import logging
+import os
 import time
 
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
 
-from sortdir import perform_initial_sorting, schedule_sorting_handler
-from sortdir.config import config as parse_config
+from sortdir.config import Config
+from sortdir.sorting import SortableDirectory, SortingEventHandler
 from sortdir.utils import print_error
 
 
@@ -19,9 +19,10 @@ logging.basicConfig(
 # set up observer
 observer = Observer()
 
-logging_event_handler = LoggingEventHandler()
-
-config = parse_config()
+try:
+    config = Config()
+except FileNotFoundError:
+    print_error("Config file does not exist")
 directories = config["directories"]
 
 directories_to_watch = []
@@ -40,10 +41,13 @@ for path in directories:
     }
 
     # sort directory
-    perform_initial_sorting(extension_to_directory, path)
+    SortableDirectory(extension_to_directory, path).sort()
+
+    logging_event_handler = LoggingEventHandler()
+    sorting_event_handler = SortingEventHandler(extension_to_directory)
 
     observer.schedule(logging_event_handler, path, recursive=False)
-    schedule_sorting_handler(observer, extension_to_directory, path)
+    observer.schedule(sorting_event_handler, path, recursive=False)
 
 # wait for events
 if directories_to_watch:
@@ -57,6 +61,6 @@ if directories_to_watch:
     try:
         while True:
             time.sleep(1)
-    finally:
+    except KeyboardInterrupt:
         observer.stop()
-        observer.join()
+    observer.join()
