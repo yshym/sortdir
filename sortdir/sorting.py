@@ -1,33 +1,48 @@
 import os
 from pathlib import Path
+from typing import Dict, List
 
 from watchdog.events import PatternMatchingEventHandler
 
 
 class SortableDirectory:
-    def __init__(self, extension_to_directory, path: Path):
+    def __init__(
+        self, extension_to_directory: Dict[str, List[str]], path: Path
+    ):
         self.extension_to_directory = extension_to_directory
         self.path = path
 
     def move_file(self, filepath):
+        """
+        Move directory file to its place, defined in extension_to_directory
+        """
+
         filename = os.path.basename(filepath)
         _, ext = os.path.splitext(filename)
         directory_name = self.extension_to_directory[ext.lower()]
         directory_path = os.path.join(self.path, directory_name)
         destination_path = os.path.join(directory_path, filename)
 
+        # create directory if it does not exist
         if not os.path.isdir(directory_path):
             os.mkdir(directory_path)
 
+        # check if file is already copied to its destination
+        # by other thread
         if not os.path.isfile(filepath) and os.path.isfile(destination_path):
             return
 
+        # remove file on destination path if it already exists
         if os.path.isfile(filepath) and os.path.isfile(destination_path):
             os.remove(destination_path)
 
         return os.rename(filepath, destination_path)
 
     def sort(self):
+        """
+        Sort directory
+        """
+
         for filename in os.listdir(self.path):
             _, ext = os.path.splitext(filename)
             filepath = os.path.join(self.path, filename)
