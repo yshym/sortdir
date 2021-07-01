@@ -11,6 +11,7 @@ class Config:
             Path("~/.config/sortdir/config.toml").expanduser(),
         ]
 
+        # use first existent path
         for path in possible_paths:
             if os.path.isfile(path):
                 self.path = path
