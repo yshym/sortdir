@@ -1,6 +1,7 @@
 import logging
 import os
 import time
+from typing import Dict, List
 
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
@@ -23,7 +24,7 @@ try:
     config = Config()
 except FileNotFoundError:
     print_error("Config file does not exist")
-directories = config["directories"]
+directories: Dict[str, Dict] = config["directories"]
 
 directories_to_watch = []
 for path in directories:
@@ -33,10 +34,10 @@ for path in directories:
 
     directories_to_watch.append(path)
 
-    directory_to_extensions = directories[path]
-    extension_to_directory = {
-        pat: ext
-        for ext, patterns in directory_to_extensions.items()
+    directory_to_extensions: Dict[str, List[str]] = directories[path]
+    extension_to_directory: Dict[str, str] = {
+        pat: dir_
+        for dir_, patterns in directory_to_extensions.items()
         for pat in patterns
     }
 
@@ -51,7 +52,7 @@ for path in directories:
 
 # wait for events
 if directories_to_watch:
-    stringified_directories = ",\n".join(directories_to_watch)
+    stringified_directories: str = ",\n".join(directories_to_watch)
     print(
         f"Watching for changes in following directories:\n{stringified_directories}",
         end="\n\n",

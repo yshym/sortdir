@@ -1,13 +1,13 @@
 import os
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, Union
 
 from watchdog.events import PatternMatchingEventHandler
 
 
 class SortableDirectory:
     def __init__(
-        self, extension_to_directory: Dict[str, List[str]], path: Path
+        self, extension_to_directory: Dict[str, str], path: Union[Path, str]
     ):
         self.extension_to_directory = extension_to_directory
         self.path = path
