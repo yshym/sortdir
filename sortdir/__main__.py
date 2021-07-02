@@ -1,6 +1,7 @@
 import logging
 import os
 import time
+from pathlib import Path
 from typing import Dict, List
 
 from watchdog.observers import Observer
@@ -28,7 +29,8 @@ directories: Dict[str, Dict] = config["directories"]
 
 directories_to_watch = []
 for path in directories:
-    if not os.path.isdir(path):
+    expanded_path = Path(path).expanduser()
+    if not os.path.isdir(expanded_path):
         print_error(f"Directory '{path}' does not exist")
         continue
 
@@ -42,13 +44,13 @@ for path in directories:
     }
 
     # sort directory
-    SortableDirectory(extension_to_directory, path).sort()
+    SortableDirectory(extension_to_directory, expanded_path).sort()
 
     logging_event_handler = LoggingEventHandler()
     sorting_event_handler = SortingEventHandler(extension_to_directory)
 
-    observer.schedule(logging_event_handler, path, recursive=False)
-    observer.schedule(sorting_event_handler, path, recursive=False)
+    observer.schedule(logging_event_handler, expanded_path, recursive=False)
+    observer.schedule(sorting_event_handler, expanded_path, recursive=False)
 
 # wait for events
 if directories_to_watch:
