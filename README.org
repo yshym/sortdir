@@ -24,8 +24,8 @@ sortdir <directory-path>
 
 * Configuration
 Create a config file in one of the following locations:
-- ~~/.sortdir.toml~
-- ~~/.config/sortdir/config.toml~
+- ~$HOME/.sortdir.toml~
+- ~$HOME/.config/sortdir/config.toml~
 
 ** Example
 #+BEGIN_SRC toml
