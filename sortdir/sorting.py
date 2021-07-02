@@ -10,7 +10,7 @@ class SortableDirectory:
         self, extension_to_directory: Dict[str, str], path: Union[Path, str]
     ):
         self.extension_to_directory = extension_to_directory
-        self.path = path
+        self.path = path.expanduser() if isinstance(path, Path) else path
 
     def move_file(self, filepath):
         """
