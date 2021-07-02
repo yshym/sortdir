@@ -1,0 +1,48 @@
+#+TITLE: sortdir
+
+#+BEGIN_QUOTE
+Tool to keep your directories clean
+#+END_QUOTE
+
+* Table of contents :TOC_2:
+- [[#installation][Installation]]
+- [[#usage][Usage]]
+- [[#configuration][Configuration]]
+  - [[#example][Example]]
+
+* Installation
+#+BEGIN_SRC shell
+pip install sortdir
+#+END_SRC
+
+* Usage
+~sortdir~ command on the specific directory will at first perform initial sorting and then start a server which will be moving every new file to its destination subdirectory defined in your config
+
+#+BEGIN_SRC shell
+sortdir <directory-path>
+#+END_SRC
+
+* Configuration
+Create a config file in one of the following locations:
+- ~~/.sortdir.toml~
+- ~~/.config/sortdir/config.toml~
+
+** Example
+#+BEGIN_SRC toml
+[directories]
+
+    [directories."~/Downloads"]
+    documents = [
+        ".doc",
+        ".docx",
+        ".ods",
+        ".odt",
+        ".pdf",
+        ".ppt",
+        ".pptx",
+        ".txt",
+        ".xls",
+        ".xlsx",
+    ]
+    images = [".gif", ".heic", ".png", ".jpeg", ".jpg"]
+#+END_SRC
