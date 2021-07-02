@@ -16,10 +16,10 @@ pip install sortdir
 #+END_SRC
 
 * Usage
-~sortdir~ command on the specific directory will at first perform initial sorting and then start a server which will be moving every new file to its destination subdirectory defined in your config
+When you run the following command the tool will at first perform initial sorting and then start a server which will be watching for new files and moving them to their destination subdirectories defined in your config
 
 #+BEGIN_SRC shell
-sortdir <directory-path>
+sortdir
 #+END_SRC
 
 * Configuration
