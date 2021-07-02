@@ -45,4 +45,8 @@ Create a config file in one of the following locations:
         ".xlsx",
     ]
     images = [".gif", ".heic", ".png", ".jpeg", ".jpg"]
+
+    [directories."~/dev"]
+    python = [".py"]
+    javascript = [".js"]
 #+END_SRC
