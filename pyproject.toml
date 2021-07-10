@@ -22,7 +22,7 @@ twine = "^3.4.1"
 ipdb = "^0.13.9"
 
 [tool.poetry.scripts]
-sortdir = "sortdir:__main__"
+sortdir = "sortdir.cli:run"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
