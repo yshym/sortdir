@@ -5,6 +5,7 @@ __pycache__/
 dist/
 
 # Environment
+.direnv
 .envrc
 
 # Flycheck
