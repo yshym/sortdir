@@ -26,6 +26,7 @@ def run():
         config = Config()
     except FileNotFoundError:
         print_error("Config file does not exist")
+        return
     directories: Dict[str, Dict] = config["directories"]
 
     directories_to_watch = []
@@ -69,3 +70,7 @@ def run():
             print("\nStopping server...")
             observer.stop()
         observer.join()
+
+
+if __name__ == "__main__":
+    run()

@@ -12,6 +12,7 @@ class Config:
         ]
 
         # use first existent path
+        self.path = None
         for path in possible_paths:
             if os.path.isfile(path):
                 self.path = path
